@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Join our Instagram group and related community links" />
+    <meta name="theme-color" content="#06b6d4" />
+    <title>MASTIKHOR GC — Links</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root{
+            --bg-1:#06b6d4; /* teal */
+            --bg-2:#00e5ff;
+            --card:#ffffffcc;
+            --muted:#6b7280;
+            --accent:#ff7ab6;
+            --radius:18px;
+            --glass: rgba(255,255,255,0.12);
+            --max-width:480px;
+            --shadow: 0 6px 20px rgba(10,10,10,0.12);
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+        }
+
+        *{box-sizing:border-box}
+        html,body{height:100%;margin:0}
+        body{
+            background:linear-gradient(135deg,var(--bg-1),var(--bg-2));
+            display:flex;align-items:center;justify-content:center;padding:28px;
+            -webkit-font-smoothing:antialiased;color:#0f172a;
+        }
+
+        .page{
+            width:100%;max-width:var(--max-width);background:linear-gradient(180deg,rgba(255,255,255,0.8),rgba(255,255,255,0.75));
+            border-radius:28px;padding:20px 18px;box-shadow:var(--shadow);backdrop-filter: blur(6px);
+        }
+
+        header{display:flex;align-items:center;gap:14px}
+        .avatar{width:84px;height:84px;border-radius:50%;overflow:hidden;flex:0 0 84px;border:3px solid #fff}
+        .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+        .meta{flex:1}
+        .handle{font-weight:700;font-size:1.05rem;margin:0}
+        .sub{color:var(--muted);font-size:0.9rem;margin-top:6px}
+        .social{margin-top:8px;display:flex;gap:8px;align-items:center}
+        .social a{color:#111;padding:8px;border-radius:8px;text-decoration:none;margin-right:6px}
+        .insta-btn{background:linear-gradient(90deg,#ff7ab6,#ffb6d8);color:#fff;padding:8px 12px;border-radius:10px;text-decoration:none;font-weight:700;box-shadow:0 6px 18px rgba(255,122,166,0.12)}
+
+        main{margin-top:18px}
+        .links{display:flex;flex-direction:column;gap:12px}
+
+        .link{
+            display:flex;align-items:center;gap:12px;padding:12px;border-radius:14px;background:var(--card);text-decoration:none;color:inherit;position:relative;overflow:hidden;
+            transition:transform .18s ease, box-shadow .18s ease;box-shadow: 0 4px 12px rgba(2,6,23,0.06);
+        }
+        .link:focus{outline:3px solid rgba(99,102,241,0.12)}
+        .link:hover{transform:translateY(-4px)}
+
+        .thumb{width:52px;height:52px;border-radius:12px;flex:0 0 52px;object-fit:cover}
+        .title{font-weight:600}
+        .desc{font-size:0.85rem;color:var(--muted)}
+
+        .actions{margin-left:auto;display:flex;gap:8px;align-items:center}
+        .btn{border:none;background:#111;color:#fff;padding:8px 10px;border-radius:10px;cursor:pointer;font-weight:600}
+        .btn.ghost{background:transparent;color:var(--muted);box-shadow:none}
+
+        .join-wrap{display:flex;justify-content:center;margin-top:18px}
+        .join-btn{background:linear-gradient(90deg,var(--accent),#ffb6d8);color:#fff;padding:10px 18px;border-radius:999px;border:none;font-weight:700;cursor:pointer;box-shadow:0 8px 30px rgba(255,122,166,0.18)}
+        .notice{margin-top:18px;text-align:center;color:var(--muted);font-size:0.95rem;padding:12px;border-radius:12px;background:rgba(255,255,255,0.6)}
+
+        .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:28px;background:#111;color:#fff;padding:10px 14px;border-radius:12px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s}
+        .toast.show{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(-6px)}
+
+        /* Rules modal */
+        .rules-modal{position:fixed;inset:0;background:linear-gradient(180deg,rgba(2,6,23,0.65),rgba(2,6,23,0.55));display:flex;align-items:center;justify-content:center;padding:20px;z-index:60}
+        .rules-panel{width:100%;max-width:520px;background:linear-gradient(180deg,#fff,#f8fafc);border-radius:14px;padding:20px;box-shadow:0 20px 60px rgba(2,6,23,0.6);color:#07133a}
+        .rules-panel h2{margin:0 0 10px;font-size:1.15rem}
+        .rules-list{list-style:decimal;margin:8px 0 0 18px;padding:0;display:flex;flex-direction:column;gap:8px}
+        .rules-list li{font-weight:600;color:#0f172a}
+        .rules-list .subline{font-weight:400;color:var(--muted);font-size:0.95rem;margin-top:6px}
+        .rules-actions{display:flex;justify-content:center;margin-top:14px}
+        .btn.accept{background:linear-gradient(90deg,#10b981,#34d399);color:#fff;padding:10px 18px;border-radius:10px;border:none;font-weight:700;cursor:pointer;box-shadow:0 10px 28px rgba(16,185,129,0.14)}
+
+        /* Hide main page until rules accepted */
+        .page.hidden{opacity:0;transform:translateY(18px) scale(0.995);pointer-events:none}
+
+        /* Page entrance animation after accept */
+        .page.enter{animation:pageIn .7s cubic-bezier(.2,.9,.2,1) forwards}
+        @keyframes pageIn{from{opacity:0;transform:translateY(18px) scale(0.995)}to{opacity:1;transform:translateY(0) scale(1)}}
+
+        /* Modal hide animation */
+        .rules-modal.hide{animation:modalOut .45s cubic-bezier(.2,.9,.2,1) forwards}
+        @keyframes modalOut{to{opacity:0;transform:translateY(-12px) scale(0.98);visibility:hidden}}
+
+        @media (max-width:420px){.page{padding:16px;border-radius:20px}.avatar{width:68px;height:68px;flex:0 0 68px}}
+    </style>
+</head>
+<body>
+    <!-- Rules modal shown first -->
+    <div id="rulesModal" class="rules-modal" role="dialog" aria-modal="true" aria-labelledby="rulesTitle">
+        <div class="rules-panel">
+            <h2 id="rulesTitle">GC RULES ↓</h2>
+            <ol class="rules-list">
+                <li>1️⃣ RESPECT EVERY MEMBERS.</li>
+                <li>2️⃣ LGBTQ ALLOWED NAHI HE.</li>
+                <li>3️⃣ FLIRTING OR DATING ALLOWED HE.</li>
+                <li>4️⃣ LADKIYO KO UNCOMFORTABLE FEEL MAT KARWANA.</li>
+                <li>5️⃣ GALIYA ALLOWED NAHI HE.</li>
+                <li>6️⃣ ABUSE MEMES AND REELS ALLOWED NAHI HE.</li>
+                <li>7️⃣ KISI BHI RELIGION KO HATE DENA ALLOWED NAHI HAI.</li>
+                <li>8️⃣ GC KE SATH LOYAL RAINA.</li>
+                <li>9️⃣ DON'T SPAM.</li>
+                <div class="notice" role="note">Only send a request if you are willing to strictly follow all the rules mentioned above.</div>
+            </ol>
+            <div class="rules-actions">
+                <button id="acceptRules" class="btn accept">I accept</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="page hidden" role="application">
+        <header>
+            <div class="avatar" aria-hidden="true"><img src="https://i.pinimg.com/236x/c0/9a/a3/c09aa3d2c36d323c1daddaa1a37ea6a5.jpg" alt="Profile"></div>
+            <div class="meta">
+                <p class="handle">@_gc_memes1</p>
+                <p class="sub"> NOTE:- Your request will only be accepted on GC if you follow me.</p>
+                        <div class="social" aria-hidden="false">
+                            <a href="https://instagram.com/_gc_memes1" aria-label="Instagram profile" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                            <a class="insta-btn" href="https://instagram.com/_gc_memes1" target="_blank" rel="noopener noreferrer">Visit Instagram</a>
+                        </div>
+            </div>
+        </header>
+
+        <main>
+            <section class="links" aria-label="Invite links">
+                <a class="link" href="#" data-url="https://www.instagram.com/channel/AbZmQ_ucnozu6tAp/" role="button" aria-label="Open Broadcast channel">
+                    <img class="thumb" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQC_btYbvUxQInE8VsPao1VNZo4sggwiXyUTQ&s" alt="Instagram" loading="lazy">
+                    <div>
+                        <div class="title">Broadcast Channel 🐱🖐️</div>
+                        <div class="desc">Important updates and announcements</div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn open" aria-label="Open Instadram invite">Open</button>
+                    </div>
+                </a>
+
+                <a class="link" href="#" data-url="https://ig.me/j/AbYb_9E0ht8efLzj/" role="button" aria-label="Open MASTIKHOR GC">
+                    <img class="thumb" src="https://i.pinimg.com/236x/17/7e/85/177e8550a84e263d3d79f8b80af627de.jpg" alt="Instagram 1" loading="lazy">
+                    <div>
+                        <div class="title">MASTIKHOR GC 🎀💗</div>
+                        <div class="desc"> Laugh, vibe and make friends</div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn open" aria-label="Open group invite">Open</button>
+                    </div>
+                </a>
+
+                <a class="link" href="#" data-url="https://ig.me/j/AbadYAoNCQIzQCa3/" role="button" aria-label="Open MASTIKHOR GC 2">
+                    <img class="thumb" src="https://i.pinimg.com/236x/26/11/6a/26116a0ff4c9614f39fd47463c58e5bc.jpg" alt="Instagram 3" loading="lazy">
+                    <div>
+                        <div class="title">MASTIKHOR GC 2 😌✨</div>
+                        <div class="desc"> Certified sticker thieves</div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn open" aria-label="Open group 2 invite">Open</button>
+                    </div>
+                </a>
+
+                <a class="link" href="#" data-url="https://discord.gg/HjSJHXbjmp" role="button" aria-label="Open Discord invite">
+                    <img class="thumb" src="data:image/webp;base64,UklGRq4HAABXRUJQVlA4IKIHAAAwLACdASrWAOoAPp1Oo0ulpKOhp1MIsLATiWNu4WeQ8Fw/7DuiuOeg5VDs3vhymV4c9rzAP1U6e3mA86H0KegB/eOon9Brpaf3Zyl7zl2jcflKlcCdicqngfpIJqHjrfH+jgQs4QFFRdTKhkICiouplQyDzjvz0LpWqhkIAcGV7I3IJ9zlv1sk2onq9ZFBoyJKlrkvDn9p/chDHI5FJ0Oo9VQhL3DrxIPWF9GqCa9tZ73Ee3p74GlxSRlMunb3iZejZo6J23JOgvOh5cXCv/1OKElyGRjUlS2L57OtEGu4Ci8177Yha2RqqZUU8M2BcniZEFhewugBZbEhdoXZ6QJP3myqbi0JuOT2a5P10ZJz+RwxcEHWRzbnX4EzEOFNAUWdT1u43i27RuV0KtjkD8LKOLGt7Mg6mbIQr90pwuDIRWapfhrBkqqc5eN0DWmz08gY/MqGQgLF6onMqGQgKKi6mVDIQFFRdTKYAAD+/MMAAAAFDbpNYwoga7IH00hzUhg6sV/capR9b4UxZEnxgb9kE2SSjzzHxlGxuRpsmzuukO09REOTgZjITaf4ZJnLht8KtjX4DSLHTl2gBmwQuwV58sDD89+23ack+eOFWANYvhg/+cmKZbntzRZ2I+Vdu95X9DUcgwGjiubkJ7sna8Sx6q1xd3djJWXwhdManirvaTrMazw+t3uQaLV5+BW7uYSPVDfkjbtg/UHgxg+doeIKdlnB9k0XcNVEpCkMXqdsGY4ef1RB8kTRSZyvfUofrcBnQtTuye4l1TqoAdSlUEIWpd50PVZR9w25E6rTwbQ4PjcmPauZMhJiiq8XqvPkbFUqD1dtn/kovXPTKPiA/hLmTtjJgAIva/kzZHw7QiSTnlTWXqyyk8tnztygcgjkjR/OgfbtsZecvYZC+qSCp4368xQmkvLEik6rSBxO/qUOgjv1XMIY59vrqxweEd93o6We4+8NdarVTPhcEnjhskGofmupLvh8DpwgmBMwwokDHgS4NK1Wh3pIKr57kTKh6NzQyEYAtn5YKZtC7uP2ayQnbcazzVcZvDsv74Xy81UGgVPk+ufiFDK3E05mTM5oXsIz0MbNdIpu7Gn8yXu6tyMiynAS41TN2NjvQk3MpTJq8P/NMtUWdMVKohoOfX4DH0dbaHzO5gYLOLVb+zjuO55mQWtNSfzM/7id0U5Z8IlvQXT9n4trWPnsoquXw6kea7wkcHgybS7vHcEosjwQoBoLSqAPKPv1Y/50btW5PtoP0mc3oUQvtiJ/5pb5FibWw6A3K5OnmV+Jkdv4ATG4G11I4UWPnPdGrkfJrY1K4weWjJfJ4SCJUD5dMa1sRCw9WaVoTSwVc2Ujem1NnrUKe2XWhKj4cPcBSXeqMe7e5mpFwfj2K18mznM3Edt2dYWb7GoZECDD4EuxLPVgQaGNOBbI/EkHIHiU1XQ8l0VEh1cTtWR9s5AyxXRQP+VnFFtxZExpbCpe95ZJf4XAJvVK3EwuCprvFCR2ABqhRlx+Upichr5qJFw1WzfiTiZQ/ZqV/WoG+/VD19uTkDedhBYMgOBt1FbuO4i1k829NtgA1Jl610C+X5nZ6r6iuh/CDXsNThdtHNR3Viy4wXNrDzfFEc3YquybbTy81HLOfcqNJwoeLXnAAR5fx/1E4n8INx43WBaxle6SRgu2d6mADDOG1jT95Ekb8WWJDG0UB0B3XxNWJmLeN75SIn9LO4e1OjArSFUL4yjsjSiOsMDiaXeLxU38upc7qcqJhMH8TsG2NgG7qBfHIypU5oLf7OnS1UkzGeADGLuKLzVRl6rwfRNDUJpTbPvVNS0AEwrHvEwTp9NLOaX9kIzRuom3fudtjgV98nKtUG2T3UVoa/838vUNmidVBlRIw1ic/Gf1gDBxbdZikwyqORuN7nVl/f/ycX7E55XOIstevx6/W9apGVSnl1/VjXI9KvMGMK/PfCRVc2samQ0cxx0nWN8Nw6++qRmrQzY+KlaEEJj0D/1l+NwVQbxiFhzhCfblKEtDxn5+x7ODsYR8GSDj0oCsUkpRtcyBrfROsmYQhETO1WE9CMkztzO3xThP4kQBMIOWFMdKhX0IlkXESKPPQ043vz42DtbZnduwW6sx7T9krv+D4li62yJ1EW+9qtLvGivbWkTcxVB9LK3unicinyTA1AN8XAz+Sog8/4dXoHglI+Vw/z/ybHWoivDdfIXtTEELAx5QpYSehY0weDLUvjXOvmwBpoZ0iOn1qkVmDYNftsALyKk23ZD2z59BmhZDEo8J8LP3vvdP9zmui9yp83bo/KjU8ug5Dl5uwo4qVoRuvhEGxMWFe1xgNcNqBb2uo1ODszK5NwxNIiCLFuRBo4PJpgGv7pKkA/WW7XF2/x8E6K5cw/6PyGhVWA+AbeVH8ndi8VNqzxpZC/zszTmcGjcOgFSkjdsHUfXISuj3JDzh9Bi5vmDHl6P0ssUyjDJcbnyZPIVH0gAd0MTio2VBH23DA9tzf9DDJcYfEIbXV3qYreqU5jeTgkSH+qixykoRkuA1K22GKw+T5w9zzxxvUzWrG0NPBmtqcYAHOljDBOeiYDFj2xmLb5Jx8tidca2AfABwc4HwAAAAAAAA" alt="Discord" loading="lazy">
+                    <div>
+                        <div class="title">Discord 🌷📣</div>
+                        <div class="desc">Community chat </div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn open" aria-label="Open Discord invite">Open</button>
+                    </div>
+                </a>
+            </section>
+
+            <div class="notice" role="note">Thank you for visiting our website and joining our GC. Kindly send your request to only one GC, not both.</div>
+        </main>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite">Link copied</div>
+
+    <script>
+        // Simple interactions: copy and open
+        const toast = document.getElementById('toast');
+        function showToast(msg='Link copied'){
+            toast.textContent = msg;toast.classList.add('show');clearTimeout(toast._t);
+            toast._t = setTimeout(()=>toast.classList.remove('show'),1800);
+        }
+
+        document.querySelectorAll('.link').forEach(link=>{
+            const url = link.dataset.url;
+            const openBtn = link.querySelector('.open');
+
+            openBtn.addEventListener('click', e=>{e.preventDefault();window.open(url,'_blank','noopener');});
+
+            // allow clicking the card to open too
+            link.addEventListener('click', e=>{
+                if(e.target.closest('.open')) return;
+                e.preventDefault();window.open(url,'_blank','noopener');
+            });
+        });
+
+        // Join all (opens in new tabs) — limited by popup blockers if many
+        const joinMainBtn = document.getElementById('joinMain');
+        if(joinMainBtn){
+            joinMainBtn.addEventListener('click', ()=>{
+                const urls = Array.from(document.querySelectorAll('.link')).map(l=>l.dataset.url).filter(Boolean);
+                urls.forEach(u=>window.open(u,'_blank','noopener'));
+                showToast('Opened invites');
+            });
+        }
+
+                // Rules modal accept flow
+                (function(){
+                    const modal = document.getElementById('rulesModal');
+                    const accept = document.getElementById('acceptRules');
+                    const page = document.querySelector('.page');
+
+                    // Always show rules modal on page load (remove automatic skip)
+                    // To enable skipping for returning users, restore the localStorage check.
+
+                    accept.addEventListener('click', ()=>{
+                        localStorage.setItem('gc_rules_accepted','1');
+                        modal.classList.add('hide');
+                        // show page with animation
+                        page.classList.remove('hidden');
+                        page.classList.add('enter');
+                        // remove modal from flow after animation
+                        setTimeout(()=>{modal.style.display='none'},520);
+                    });
+                })();
+    </script>
+</body>
+</html>
